@@ -1,0 +1,82 @@
+<!-- breeds-page.html -->
+
+<!-- Select para escoger raza -->
+<mat-form-field appearance="fill" class="w-100">
+  <mat-label>Selecciona una raza</mat-label>
+  <mat-select 
+    (selectionChange)="onBreedSelected($event.value)" 
+    [value]="selectedBreed?.id">
+    <mat-option *ngFor="let breed of breeds" [value]="breed.id">
+      {{ breed.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<!-- Detalle + Carousel -->
+<div *ngIf="selectedBreed" class="my-4">
+  <h3>{{ selectedBreed.name || 'Sin nombre' }}</h3>
+  <p>{{ selectedBreed.temperament || 'Sin información de temperamento' }}</p>
+  <p><strong>Origen:</strong> {{ selectedBreed.origin || 'Desconocido' }}</p>
+
+  <div *ngIf="images.length > 0" id="carouselExamples" class="carousel slide">
+    <div class="carousel-indicators">
+      <button *ngFor="let img of images; let i = index" 
+              type="button" 
+              data-bs-target="#carouselExamples"
+              [attr.data-bs-slide-to]="i"
+              [class.active]="i === 0"
+              [attr.aria-current]="i === 0"
+              [attr.aria-label]="'Slide ' + (i + 1)">
+      </button>
+    </div>
+
+    <div class="carousel-inner">
+      <div *ngFor="let img of images; let i = index" 
+           class="carousel-item" 
+           [class.active]="i === 0">
+        <img [src]="img.url" class="d-block w-100" [alt]="selectedBreed.name">
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExamples" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExamples" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+</div>
+
+<!-- Tabla de razas -->
+<div class="mat-elevation-z8 w-100">
+  <table mat-table [dataSource]="breeds" class="w-100">
+    
+    <!-- Nombre -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+    </ng-container>
+
+    <!-- Origen -->
+    <ng-container matColumnDef="origin">
+      <th mat-header-cell *matHeaderCellDef> Origen </th>
+      <td mat-cell *matCellDef="let element"> {{ element.origin }} </td>
+    </ng-container>
+
+    <!-- Vida -->
+    <ng-container matColumnDef="life_span">
+      <th mat-header-cell *matHeaderCellDef> Vida (años) </th>
+      <td mat-cell *matCellDef="let element"> {{ element.life_span }} </td>
+    </ng-container>
+
+    <!-- Header y filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+        (click)="selectFromTable(row)"
+        [class.selected]="row.id === selectedBreed?.id"
+        style="cursor: pointer;">
+    </tr>
+  </table>
+</div>

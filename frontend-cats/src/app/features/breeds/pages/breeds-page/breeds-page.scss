@@ -1,0 +1,40 @@
+.w-100 {
+  width: 100%;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+// Estilos para el carrusel
+.carousel {
+  margin-top: 2rem;
+  
+  img {
+    height: 400px;
+    object-fit: cover;
+  }
+}
+
+// Estilos para la tabla
+.mat-mdc-table {
+  width: 100%;
+  
+  .mat-mdc-row {
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+    
+    &.selected {
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+// Contenedor de la tabla con scroll
+.mat-elevation-z8 {
+  overflow: auto;
+  max-height: 400px;
+  margin-top: 2rem;
+}
