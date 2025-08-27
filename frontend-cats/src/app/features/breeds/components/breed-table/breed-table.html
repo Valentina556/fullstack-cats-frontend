@@ -1,1 +1,23 @@
-<p>breed-table works!</p>
+<div class="breed-container">
+  <div class="filters-section">
+    <!-- Selector de razas -->
+    <mat-form-field appearance="outline" class="breed-select">
+      <mat-label>Seleccionar raza</mat-label>
+      <mat-select [(ngModel)]="selectedBreedName" (selectionChange)="onBreedSelect($event.value)">
+        <mat-option value="">Todas las razas</mat-option>
+        <mat-option *ngFor="let breed of breeds" [value]="breed.name">
+          {{breed.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Barra de búsqueda -->
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Buscar por nombre</mat-label>
+      <input matInput 
+             [(ngModel)]="searchQuery" 
+             (keyup.enter)="onSearch()"
+             placeholder="Escriba el nombre de la raza...">
+    </mat-form-field>
+  </div>
+</div>

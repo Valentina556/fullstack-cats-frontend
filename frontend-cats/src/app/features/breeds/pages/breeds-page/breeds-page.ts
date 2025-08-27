@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,7 +8,7 @@ import { BreedService } from '../../../../core/services/breed';
 import { Breed } from '../../../../shared/models/breed.model';
 import { Image } from '../../../../shared/models/image.model';
 import { FormsModule } from '@angular/forms';
-
+import { BreedTable } from '../../components/breed-table/breed-table';
 
 @Component({
   selector: 'app-breeds-page',
@@ -22,8 +22,9 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    
-  ]
+    BreedTable
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 export class BreedsPageComponent {

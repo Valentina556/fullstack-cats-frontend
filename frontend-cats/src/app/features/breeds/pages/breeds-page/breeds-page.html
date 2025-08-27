@@ -1,51 +1,52 @@
 <!-- breeds-page.html -->
+<div class="breeds-container">
+  <div class="content-wrapper">
+    <!-- Header con título -->
+    <header class="page-header">
+      <h1>Razas de Gatos</h1>
+      <p class="subtitle">Explora nuestra colección de razas felinas</p>
+    </header>
 
-<!-- Select para escoger raza -->
-<mat-form-field appearance="fill" class="w-100">
-  <mat-label>Selecciona una raza</mat-label>
-  <mat-select 
-    (selectionChange)="onBreedSelected($event.value)" 
-    [value]="selectedBreed?.id">
-    <mat-option *ngFor="let breed of breeds" [value]="breed.id">
-      {{ breed.name }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+    <!-- Grid layout para tabla y preview -->
+    <div class="main-content" [class.with-preview]="selectedBreed && images.length > 0">
+      <!-- Columna izquierda: Tabla -->
+      <div class="table-section">
+        <app-breed-table 
+          [breeds]="breeds"
+          [selected-breed-id]="selectedBreed?.id"
+          (breedSelected)="onBreedSelected($event)">
+        </app-breed-table>
+      </div>
 
-<!-- Detalle + Carousel -->
-<div *ngIf="selectedBreed" class="my-4">
-  <h3>{{ selectedBreed.name || 'Sin nombre' }}</h3>
-  <p>{{ selectedBreed.temperament || 'Sin información de temperamento' }}</p>
-  <p><strong>Origen:</strong> {{ selectedBreed.origin || 'Desconocido' }}</p>
+      <!-- Columna derecha: Preview de imágenes -->
+      <div *ngIf="selectedBreed && images.length > 0" class="preview-section">
+        <div class="breed-info">
+          <h2>{{ selectedBreed.name }}</h2>
+          <p class="breed-description" *ngIf="selectedBreed.description">{{ selectedBreed.description }}</p>
+        </div>
 
-  <div *ngIf="images.length > 0" id="carouselExamples" class="carousel slide">
-    <div class="carousel-indicators">
-      <button *ngFor="let img of images; let i = index" 
-              type="button" 
-              data-bs-target="#carouselExamples"
-              [attr.data-bs-slide-to]="i"
-              [class.active]="i === 0"
-              [attr.aria-current]="i === 0"
-              [attr.aria-label]="'Slide ' + (i + 1)">
-      </button>
-    </div>
+        <div class="carousel-wrapper">
+          <div id="carouselExamples" class="carousel slide">
+            <div class="carousel-inner">
+              <div *ngFor="let img of images; let i = index" 
+                   class="carousel-item" 
+                   [class.active]="i === 0">
+                <img [src]="img.url" [alt]="selectedBreed.name">
+              </div>
+            </div>
 
-    <div class="carousel-inner">
-      <div *ngFor="let img of images; let i = index" 
-           class="carousel-item" 
-           [class.active]="i === 0">
-        <img [src]="img.url" class="d-block w-100" [alt]="selectedBreed.name">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExamples" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExamples" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Siguiente</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExamples" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExamples" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Siguiente</span>
-    </button>
   </div>
 </div>
 
